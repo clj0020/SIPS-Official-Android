@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="isLoading"
+            type="boolean" />
+        <variable
+            name="athleteTestViewModel"
+            type="edu.auburn.sips_android_official.ui.athlete_testing.AthleteTestViewModel" />
+        <variable
+            name="isClockStarted"
+            type="boolean" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/time_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/black"
+            tools:text="10 seconds left"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/athlete_item_horizontal_margin"
+            android:layout_marginEnd="@dimen/athlete_item_horizontal_margin">
+
+            <Button
+                android:id="@+id/start_athlete_test_button"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="@string/start_test"
+                android:visibility="@{isClockStarted ? View.GONE : View.VISIBLE}"
+                android:theme="@style/PrimaryButton"/>
+
+            <Button
+                android:id="@+id/stop_athlete_test_button"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="@string/stop_test"
+                android:visibility="@{!isClockStarted ? View.GONE : View.VISIBLE}"
+                android:theme="@style/PrimaryButton"/>
+
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+</layout>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="athlete"
+            type="edu.auburn.sips_android_official.data.models.Athlete"/>
+        <variable name="callback"
+            type="edu.auburn.sips_android_official.ui.adapters.AthleteClickCallback"/>
+    </data>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/athlete_item_min_height"
+        android:onClick="@{() ->  callback.onClick(athlete)}"
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/athlete_item_horizontal_margin"
+        android:layout_marginEnd="@dimen/athlete_item_horizontal_margin"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:layout_marginStart="@dimen/athlete_item_horizontal_margin"
+            android:layout_marginEnd="@dimen/athlete_item_horizontal_margin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/cd_athlete_name"
+                android:text="@{athlete.name}"/>
+
+            <!--<TextView-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/name"-->
+                <!--android:text="@{athlete.description}"/>-->
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</layout>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="isLoading"
+            type="boolean" />
+        <variable
+            name="athleteViewModel"
+            type="edu.auburn.sips_android_official.ui.athlete.AthleteViewModel"/>
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryDark"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/athlete_item"
+            app:athlete="@{athleteViewModel.athlete}"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginStart="@dimen/athlete_item_horizontal_margin"
+            android:layout_marginEnd="@dimen/athlete_item_horizontal_margin">
+
+            <Button
+                android:id="@+id/test_athlete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="@string/test_athlete"
+                android:onClick=""
+                android:theme="@style/PrimaryButton"/>
+
+            <Button
+                android:id="@+id/edit_athlete_button"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:text="@string/edit_athlete"
+                android:theme="@style/PrimaryButton"/>
+
+
+
+        </LinearLayout>
+
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/loading_test_data_tv"
+                android:text="@string/loading_test_data"
+                app:visibleGone="@{isLoading}"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/test_data_list_wrapper">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/test_data_list"
+                    android:contentDescription="@string/cd_test_data_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layoutManager="LinearLayoutManager"
+                    app:visibleGone="@{!isLoading}"/>
+            </FrameLayout>
+        </FrameLayout>
+
+
+    </LinearLayout>
+</layout>

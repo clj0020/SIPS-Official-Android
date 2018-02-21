@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="testData"
+            type="edu.auburn.sips_android_official.data.models.TestData"/>
+        <variable name="callback"
+            type="edu.auburn.sips_android_official.ui.adapters.TestDataClickCallback"/>
+    </data>
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@color/test_data_light_background"
+        android:layout_marginStart="@dimen/test_data_horizontal_margin"
+        android:layout_marginEnd="@dimen/test_data_horizontal_margin"
+
+        android:minHeight="@dimen/test_data_minHeight"
+        android:onClick="@{() ->  callback.onClick(testData)}"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        app:cardUseCompatPadding="true">
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/test_data_padding"
+                android:text="@{testData.title}"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</layout>
