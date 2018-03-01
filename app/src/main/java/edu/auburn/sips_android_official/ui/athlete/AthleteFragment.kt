@@ -7,9 +7,8 @@ import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.support.v4.app.Fragment
 import android.util.Log
-import android.view.ViewGroup
-import android.view.LayoutInflater
-import android.view.View
+import android.view.*
+import com.android.databinding.library.baseAdapters.BR.athlete
 import edu.auburn.sips_android_official.R
 import edu.auburn.sips_android_official.data.models.TestData
 import edu.auburn.sips_android_official.data.room.entity.AthleteEntity
@@ -49,6 +48,8 @@ class AthleteFragment : Fragment() {
         mTestDataAdapter = TestDataAdapter(mTestDataClickCallback)
         mBinding!!.testDataList.setAdapter(mTestDataAdapter)
 
+        setHasOptionsMenu(true)
+
         return mBinding!!.getRoot()
     }
 
@@ -69,6 +70,12 @@ class AthleteFragment : Fragment() {
         subscribeToModel(model)
     }
 
+    override fun onResume() {
+        super.onResume()
+        val activity = activity as MainActivity?
+        activity?.showBackButton()
+    }
+
     private fun subscribeToModel(model: AthleteViewModel) {
 
         mBinding!!.getRoot().test_athlete_button.setOnClickListener({
@@ -80,8 +87,8 @@ class AthleteFragment : Fragment() {
         // Create the observer which updates the UI.
         val athleteObserver = Observer<AthleteEntity>() { athlete ->
             model.setAthlete(athlete!!)
+            (activity as MainActivity).setToolbarTitle(athlete.firstName + " " + athlete.lastName + "'s Profile")
         }
-
 
         // Observe athlete data
         model.observableAthlete.observe(this, athleteObserver)
@@ -100,6 +107,23 @@ class AthleteFragment : Fragment() {
         model.testData.observe(this, testDataObserver)
 
     }
+
+    /** For handling toolbar_main actions  */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val mActivity = activity as MainActivity
+        when (item.itemId) {
+            android.R.id.home -> {
+                mActivity.onBackPressed()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    /** Simply inflates menu resource file to the toolbar_main  */
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_detail, menu)
+    }
+
 
     companion object {
 

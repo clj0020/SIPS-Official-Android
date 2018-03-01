@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/cd_athlete_name"
-                android:text="@{athlete.name}"/>
+                android:text="@{athlete.firstName + ' ' + athlete.lastName}"/>
 
             <!--<TextView-->
                 <!--android:layout_width="match_parent"-->

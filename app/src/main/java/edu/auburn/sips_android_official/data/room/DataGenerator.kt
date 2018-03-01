@@ -28,7 +28,9 @@ object DataGenerator {
         for (i in FIRST.indices) {
             for (j in SECOND.indices) {
                 val athlete = AthleteEntity(
-                        name=(FIRST[i] + ' ' + SECOND[j]),
+                        firstName=(FIRST[i]),
+                        lastName=(SECOND[j]),
+                        email="test@gmail.com",
                         id=(FIRST.size * i + j + 1))
                 athletes.add(athlete)
             }

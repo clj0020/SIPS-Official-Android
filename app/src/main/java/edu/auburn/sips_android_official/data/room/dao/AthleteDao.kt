@@ -24,4 +24,8 @@ interface AthleteDao {
 
     @Query("select * from athletes where id = :athleteId")
     fun loadAthleteSync(athleteId: Int): AthleteEntity
+
+    @Insert
+    fun insert(athleteEntity: AthleteEntity): Long
+
 }

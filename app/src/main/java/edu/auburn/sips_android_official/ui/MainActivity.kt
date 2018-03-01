@@ -2,16 +2,16 @@ package edu.auburn.sips_android_official.ui
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.design.widget.BottomNavigationView
 import android.view.MenuItem
 import edu.auburn.sips_android_official.R
-import android.content.ContentValues.TAG
 import android.support.annotation.Nullable
-import android.util.Log
+import android.view.Menu
 import edu.auburn.sips_android_official.data.models.Athlete
+import edu.auburn.sips_android_official.ui.add_athlete.AddAthleteFragment
 import edu.auburn.sips_android_official.ui.athlete.AthleteFragment
 import edu.auburn.sips_android_official.ui.athlete_testing.AthleteTestFragment
 import edu.auburn.sips_android_official.ui.athletes.AthleteListFragment
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -19,6 +19,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(@Nullable savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        setUpToolbar()
 
         // Add athlete list fragment if this is first creation
         if (savedInstanceState == null) {
@@ -29,16 +31,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /** Shows the athlete detail fragment  */
-    fun show(athlete: Athlete) {
 
-        val athleteFragment = AthleteFragment.forAthlete(athlete.id)
+    /** Shows the athlete detail fragment  */
+    fun showAthleteFragment(athleteId: Int) {
+
+        val athleteFragment = AthleteFragment.forAthlete(athleteId)
 
         supportFragmentManager
                 .beginTransaction()
                 .addToBackStack("athlete")
                 .replace(R.id.fragment_container,
-                        athleteFragment, null).commit()
+                        athleteFragment, "athlete").commit()
     }
 
     /** Shows the athlete detail fragment  */
@@ -48,56 +51,62 @@ class MainActivity : AppCompatActivity() {
 
         supportFragmentManager
                 .beginTransaction()
-                .addToBackStack("athleteProfile")
+                .addToBackStack("athleteTest")
                 .replace(R.id.fragment_container,
-                        athleteTestFragment, null).commit()
-    }
-
-    /** Begin athlete test */
-    fun beginTest(test: Int, athleteId: Int) {
-        Log.i("MainActivity: ", "Begin testing for test #" + test + " on Athlete #" + athleteId)
-
-        // Use CallNative to initialize sensors
-
-        // Start Timer
-
-            // Use CallNative to begin sensor data monitoring
-
-            // If sensors are on
-
-                // Prepare sensor data for storage.
-
-                // if sensor data has been prepared for storage
-
-                    // Add sensor data to local storage.
-
-                    // Ask user if they want to upload sensor data to network database.
-
-                        // If user wants to upload sensor data
-
-                            // upload sensor data
-
-                                // if successful
-
-                                    // update cached athlete
-
-                                    // show success message
-
-                                    // redirect to athlete fragment.
-
-                                // else
-
-                                    // show error message
-
-                // else
-
-                    // show error message
-
-            // else
-
-                // show error message
-        // End Timer
-
+                        athleteTestFragment, "athleteTest").commit()
 
     }
+
+    /** Shows the add athlete fragment  */
+    fun showAddAthleteFragment() {
+        val addAthleteFragment = AddAthleteFragment.createAddAthleteFragment()
+
+        supportFragmentManager
+                .beginTransaction()
+                .addToBackStack("addAthlete")
+                .replace(R.id.fragment_container,
+                        addAthleteFragment, "addAthlete").commit()
+    }
+
+    fun showAthleteListFragment() {
+        val athleteListFragment = AthleteListFragment()
+
+        supportFragmentManager
+                .beginTransaction()
+                .addToBackStack("athleteList")
+                .replace(R.id.fragment_container,
+                        athleteListFragment, "athleteList").commit()
+    }
+
+    private fun setUpToolbar() {
+        setSupportActionBar(toolbar)
+    }
+
+    fun setToolbarTitle(title: String) {
+        supportActionBar!!.setTitle(title)
+    }
+
+    /** Shows the back button on the toolbar_main */
+    fun showBackButton() {
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+    }
+
+    /** Shows the back button on the toolbar_main */
+    fun hideBackButton() {
+        supportActionBar!!.setDisplayHomeAsUpEnabled(false)
+    }
+
+    /** pops the fragment back stack on back button pressed. */
+    override fun onBackPressed() {
+
+        val fragmentManager = supportFragmentManager
+        if (fragmentManager.backStackEntryCount > 1) {
+            fragmentManager.popBackStackImmediate()
+        } else {
+            super.onBackPressed()
+        }
+    }
+
+
+
 }

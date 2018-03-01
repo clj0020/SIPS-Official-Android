@@ -19,4 +19,12 @@
     <string name="one_leg_squat_hold">One Leg Squat Hold</string>
     <string name="single_leg_jump">Single Leg Jump</string>
 
+    <string name="submit">Submit</string>
+    <string name="add_athlete">Add Athlete</string>
+    <string name="search">Search</string>
+    <string name="settings">Settings</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_last_name">Last Name</string>
+    <string name="first_name">First Name</string>
+
 </resources>

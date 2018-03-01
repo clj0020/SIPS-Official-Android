@@ -47,7 +47,9 @@ class AthleteAdapter(@param:Nullable @field:Nullable
                     val oldAthlete = mAthleteList!![oldItemPosition]
                     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
                         (newAthlete.id === oldAthlete.id
-                                && Objects.equals(newAthlete.name, oldAthlete.name))
+                                && Objects.equals(newAthlete.firstName, oldAthlete.firstName)
+                                && Objects.equals(newAthlete.lastName, oldAthlete.lastName)
+                                && Objects.equals(newAthlete.email, oldAthlete.email))
                     } else {
                         TODO("VERSION.SDK_INT < KITKAT")
 
@@ -76,4 +78,9 @@ class AthleteAdapter(@param:Nullable @field:Nullable
     }
 
     class AthleteViewHolder(val binding: AthleteItemBinding) : RecyclerView.ViewHolder(binding.getRoot())
+
+    fun setSearchResult(result: List<Athlete>) {
+        mAthleteList = result
+        notifyDataSetChanged()
+    }
 }

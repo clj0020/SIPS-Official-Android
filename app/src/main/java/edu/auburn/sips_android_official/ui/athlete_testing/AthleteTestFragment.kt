@@ -7,13 +7,12 @@ import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 
 import edu.auburn.sips_android_official.databinding.AthleteTestFragmentBinding
 import kotlinx.android.synthetic.main.athlete_test_fragment.view.*
 import edu.auburn.sips_android_official.R
+import edu.auburn.sips_android_official.ui.MainActivity
 import kotlinx.android.synthetic.main.athlete_test_fragment.*
 
 
@@ -31,6 +30,8 @@ class AthleteTestFragment : Fragment() {
                               savedInstanceState: Bundle?): View? {
 
         mBinding = DataBindingUtil.inflate(inflater, R.layout.athlete_test_fragment, container, false)
+
+        setHasOptionsMenu(true)
 
         return mBinding!!.getRoot()
     }
@@ -53,26 +54,32 @@ class AthleteTestFragment : Fragment() {
 
     private fun subscribeUI(model: AthleteTestViewModel) {
 
+        (activity as MainActivity).setToolbarTitle("Choose a test")
+
         mBinding!!.root.one_leg_squat_hold_button.setOnClickListener({
             mBinding!!.setIsTestChosen(true)
             mBinding!!.root.test_title_text.setText("One Leg Squat Hold")
             model.setTest(ONE_LEG_SQUAT_HOLD)
+            (activity as MainActivity).setToolbarTitle("One Leg Squat Hold")
         })
 
         mBinding!!.root.single_leg_jump_button.setOnClickListener({
             mBinding!!.setIsTestChosen(true)
             mBinding!!.root.test_title_text.setText("Single Leg Jump")
             model.setTest(SINGLE_LEG_JUMP)
+            (activity as MainActivity).setToolbarTitle("Single Leg Jump")
         })
 
         mBinding!!.root.start_athlete_test_button.setOnClickListener({
             mBinding!!.setIsClockStarted(true)
             model.startTimer()
+            (activity as MainActivity).setToolbarTitle("Perform Exercise..")
         })
 
         mBinding!!.root.stop_athlete_test_button.setOnClickListener({
             mBinding!!.setIsClockStarted(false)
             model.stopTimer()
+            (activity as MainActivity).setToolbarTitle("Exercise Finished..")
         })
 
         val timeObserver = Observer<String> {formattedTime ->
@@ -86,6 +93,28 @@ class AthleteTestFragment : Fragment() {
         val testObserver = Observer<Int>() { test ->
             model.setTest(test!!)
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        val activity = activity as MainActivity?
+        activity?.showBackButton()
+    }
+
+    /** For handling toolbar_main actions  */
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val mActivity = activity as MainActivity
+        when (item.itemId) {
+            android.R.id.home -> {
+                mActivity.onBackPressed()
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    /** Simply inflates menu resource file to the toolbar_main  */
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.toolbar_detail, menu)
     }
 
     companion object {

@@ -10,6 +10,8 @@ import edu.auburn.sips_android_official.data.models.Athlete
  */
 @Entity(tableName = "athletes")
 data class AthleteEntity(
-        @PrimaryKey override var id: Int = 0,
-        override var name: String = ""
+        @PrimaryKey(autoGenerate = true) override var id: Int = 0,
+        override var firstName: String = "",
+        override var lastName: String = "",
+        override var email: String = ""
 ) : Athlete
