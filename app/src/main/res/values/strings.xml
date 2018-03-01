@@ -15,5 +15,8 @@
     <string name="edit_athlete">Edit Athlete</string>
     <string name="start_test">Start Test</string>
     <string name="stop_test">Stop</string>
+    <string name="choose_test">Choose Test</string>
+    <string name="one_leg_squat_hold">One Leg Squat Hold</string>
+    <string name="single_leg_jump">Single Leg Jump</string>
 
 </resources>

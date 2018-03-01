@@ -1,7 +1,6 @@
 package edu.auburn.sips_android_official.ui.athlete_testing
 
 
-import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
@@ -11,18 +10,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import edu.auburn.sips_android_official.BR
 
-import edu.auburn.sips_android_official.data.room.entity.AthleteEntity
 import edu.auburn.sips_android_official.databinding.AthleteTestFragmentBinding
-import edu.auburn.sips_android_official.ui.MainActivity
-import edu.auburn.sips_android_official.ui.adapters.TestDataAdapter
-import edu.auburn.sips_android_official.ui.athlete.AthleteFragment
-import edu.auburn.sips_android_official.ui.athlete.AthleteViewModel
-import edu.auburn.sips_android_official.util.RxCountDownTimer
-import kotlinx.android.synthetic.main.athlete_fragment.view.*
 import kotlinx.android.synthetic.main.athlete_test_fragment.view.*
-import android.widget.TextView
 import edu.auburn.sips_android_official.R
 import kotlinx.android.synthetic.main.athlete_test_fragment.*
 
@@ -31,7 +21,7 @@ import kotlinx.android.synthetic.main.athlete_test_fragment.*
 
 
 /**
- * A simple [Fragment] subclass.
+ * The fragment for performing athlete tests.
  */
 class AthleteTestFragment : Fragment() {
 
@@ -63,12 +53,24 @@ class AthleteTestFragment : Fragment() {
 
     private fun subscribeUI(model: AthleteTestViewModel) {
 
-        mBinding!!.getRoot().start_athlete_test_button.setOnClickListener({
+        mBinding!!.root.one_leg_squat_hold_button.setOnClickListener({
+            mBinding!!.setIsTestChosen(true)
+            mBinding!!.root.test_title_text.setText("One Leg Squat Hold")
+            model.setTest(ONE_LEG_SQUAT_HOLD)
+        })
+
+        mBinding!!.root.single_leg_jump_button.setOnClickListener({
+            mBinding!!.setIsTestChosen(true)
+            mBinding!!.root.test_title_text.setText("Single Leg Jump")
+            model.setTest(SINGLE_LEG_JUMP)
+        })
+
+        mBinding!!.root.start_athlete_test_button.setOnClickListener({
             mBinding!!.setIsClockStarted(true)
             model.startTimer()
         })
 
-        mBinding!!.getRoot().stop_athlete_test_button.setOnClickListener({
+        mBinding!!.root.stop_athlete_test_button.setOnClickListener({
             mBinding!!.setIsClockStarted(false)
             model.stopTimer()
         })
@@ -79,14 +81,18 @@ class AthleteTestFragment : Fragment() {
             }
         }
 
-
         model.formattedTime.observe(this, timeObserver)
 
+        val testObserver = Observer<Int>() { test ->
+            model.setTest(test!!)
+        }
     }
 
     companion object {
 
         private val KEY_ATHLETE_ID = "athlete_id"
+        private val ONE_LEG_SQUAT_HOLD = 0
+        private val SINGLE_LEG_JUMP = 1
 
         /** Creates athlete fragment for specific athlete ID  */
         fun forAthlete(athleteId: Int): AthleteTestFragment {

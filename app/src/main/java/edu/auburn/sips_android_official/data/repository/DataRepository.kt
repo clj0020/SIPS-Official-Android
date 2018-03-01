@@ -4,8 +4,15 @@ import android.arch.lifecycle.LiveData
 import edu.auburn.sips_android_official.data.room.AppDatabase
 import android.arch.lifecycle.MediatorLiveData
 import android.util.Log
+import edu.auburn.sips_android_official.data.models.TestData
 import edu.auburn.sips_android_official.data.room.entity.AthleteEntity
 import edu.auburn.sips_android_official.data.room.entity.TestDataEntity
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
+import org.json.JSONArray
+import java.util.*
 
 
 /**
@@ -41,6 +48,27 @@ class DataRepository private constructor(private val mDatabase: AppDatabase) {
     fun loadTestData(athleteId: Int): LiveData<List<TestDataEntity>> {
         return mDatabase.testDataDao().loadTestData(athleteId)
     }
+
+    fun addTestData(testDate: Date,
+                    accelerometerData: ArrayList<Array<Float>>,
+                    gyroscopeData: ArrayList<Array<Float>>,
+                    magnometerData: ArrayList<Array<Float>>,
+                    athleteId: Int): Disposable {
+
+        val testData = TestDataEntity(
+                athleteId = athleteId,
+                testedAt = testDate,
+                title = "Test",
+                accelerometerArray = accelerometerData,
+                gyroscopeArray = gyroscopeData,
+                magnetometerArray = magnometerData)
+
+        return Single.fromCallable {
+            mDatabase.testDataDao().insert(testData)
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).subscribe()
+    }
+
 
     companion object {
 

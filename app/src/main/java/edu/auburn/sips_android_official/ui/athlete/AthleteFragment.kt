@@ -34,7 +34,9 @@ class AthleteFragment : Fragment() {
     private val mTestDataClickCallback = object : TestDataClickCallback {
         override fun onClick(testData: TestData) {
             // no-op
-
+            Log.i("AthleteFragment: ", "AccelerometerData: x=" + testData.accelerometerArray[0][0] + " y=" + testData.accelerometerArray[0][1] + " z=" + testData.accelerometerArray[0][2])
+            Log.i("AthleteFragment: ", "GyroscopeData: x=" + testData.gyroscopeArray[0][0] + " y=" + testData.gyroscopeArray[0][1] + " z=" + testData.gyroscopeArray[0][2])
+            Log.i("AthleteFragment: ", "MagnometerData: x=" + testData.magnetometerArray[0][0] + " y=" + testData.magnetometerArray[0][1] + " z=" + testData.magnetometerArray[0][2])
         }
     }
 

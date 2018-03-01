@@ -21,5 +21,8 @@ interface TestDataDao {
     fun loadTestDataSync(athleteId: Int): List<TestDataEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(testData: List<TestDataEntity>);
+    fun insertAll(testData: List<TestDataEntity>)
+
+    @Insert
+    fun insert(testDataEntity: TestDataEntity)
 }

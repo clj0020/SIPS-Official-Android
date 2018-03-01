@@ -35,25 +35,25 @@ object DataGenerator {
         }
         return athletes
     }
-
-    fun generateTestDataForAthletes(
-            athletes: List<AthleteEntity>): List<TestDataEntity> {
-        val testDataArray = ArrayList<TestDataEntity>()
-        val rnd = Random()
-
-        for (athlete in athletes) {
-            val testDataNumber = rnd.nextInt(5) + 1
-            for (i in 0 until testDataNumber) {
-                val testData = TestDataEntity(
-                        athleteId = (athlete.id),
-                        title = (TEST_DATA[i] + " for " + athlete.name),
-                        testedAt = (Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis((testDataNumber - i).toLong()) + TimeUnit.HOURS.toMillis(i.toLong())))
-                )
-                testDataArray.add(testData)
-            }
-        }
-
-        return testDataArray
-    }
+//
+//    fun generateTestDataForAthletes(
+//            athletes: List<AthleteEntity>): List<TestDataEntity> {
+//        val testDataArray = ArrayList<TestDataEntity>()
+//        val rnd = Random()
+//
+//        for (athlete in athletes) {
+//            val testDataNumber = rnd.nextInt(5) + 1
+//            for (i in 0 until testDataNumber) {
+//                val testData = TestDataEntity(
+//                        athleteId = (athlete.id),
+//                        title = (TEST_DATA[i] + " for " + athlete.name),
+//                        testedAt = (Date(System.currentTimeMillis() - TimeUnit.DAYS.toMillis((testDataNumber - i).toLong()) + TimeUnit.HOURS.toMillis(i.toLong())))
+//                )
+//                testDataArray.add(testData)
+//            }
+//        }
+//
+//        return testDataArray
+//    }
 }
 

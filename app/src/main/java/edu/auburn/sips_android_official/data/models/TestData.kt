@@ -10,4 +10,7 @@ interface TestData {
     var athleteId: Int
     var testedAt: Date
     var title: String
+    var accelerometerArray: ArrayList<Array<Float>>
+    var gyroscopeArray: ArrayList<Array<Float>>
+    var magnetometerArray: ArrayList<Array<Float>>
 }

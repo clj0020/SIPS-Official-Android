@@ -14,6 +14,7 @@ import android.content.Context
 import android.support.annotation.NonNull
 import android.util.Log
 import edu.auburn.sips_android_official.data.room.converter.DateConverter
+import edu.auburn.sips_android_official.data.room.converter.SensorDataConverter
 import edu.auburn.sips_android_official.data.room.dao.AthleteDao
 import edu.auburn.sips_android_official.data.room.dao.TestDataDao
 import edu.auburn.sips_android_official.data.room.entity.AthleteEntity
@@ -26,7 +27,7 @@ import edu.auburn.sips_android_official.util.AppExecutors
  */
 
 @Database(entities = arrayOf(AthleteEntity::class, TestDataEntity::class), version = 1)
-@TypeConverters(DateConverter::class)
+@TypeConverters(DateConverter::class, SensorDataConverter::class)
 abstract class AppDatabase : RoomDatabase() {
 
     private val mIsDatabaseCreated = MutableLiveData<Boolean>()
@@ -87,10 +88,10 @@ abstract class AppDatabase : RoomDatabase() {
                                 // Generate the data for pre-population
                                 val database = AppDatabase.getInstance(appContext, executors)
                                 val athletes = DataGenerator.generateAthletes()
-                                val testData = DataGenerator.generateTestDataForAthletes(athletes)
+//                                val testData = DataGenerator.generateTestDataForAthletes(athletes)
 
                                 if (database != null) {
-                                    insertData(database, athletes, testData)
+                                    insertData(database, athletes)
                                 }
                                 // notify that the database was created and it's ready to be used
                                 database?.setDatabaseCreated()
@@ -99,11 +100,10 @@ abstract class AppDatabase : RoomDatabase() {
                     }).build()
         }
 
-        private fun insertData(database: AppDatabase, athletes: List<AthleteEntity>,
-                               testData: List<TestDataEntity>) {
+        private fun insertData(database: AppDatabase, athletes: List<AthleteEntity>) {
             database.runInTransaction {
                 database.athleteDao().insertAll(athletes)
-                database.testDataDao().insertAll(testData)
+//                database.testDataDao().insertAll(testData)
             }
         }
 

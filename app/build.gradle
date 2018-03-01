@@ -8,16 +8,11 @@ android {
     compileSdkVersion 27
     defaultConfig {
         applicationId "edu.auburn.sips_android_official"
-        minSdkVersion 15
+        minSdkVersion 16
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-                cppFlags ""
-            }
-        }
     }
     buildTypes {
         release {
@@ -28,11 +23,6 @@ android {
             minifyEnabled false
             debuggable true
 
-        }
-    }
-    externalNativeBuild {
-        cmake {
-            path "CMakeLists.txt"
         }
     }
     packagingOptions {
@@ -84,4 +74,6 @@ dependencies {
     provided 'org.glassfish:javax.annotation:10.0-b28'
     // Tests
     testCompile 'org.mockito:mockito-core:2.8.9'
+
+    implementation 'com.github.pwittchen:reactivesensors-rx2:0.2.0'
 }
